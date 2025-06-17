@@ -1,0 +1,12 @@
+version: 2
+
+macros:
+  - name: query
+    description: Execute a SQL query and log results
+    arguments:
+      - name: sql
+        type: string
+        description: SQL query to execute
+
+  - name: cleanup_staging_and_intermediate
+    description: Drop all staging and intermediate tables

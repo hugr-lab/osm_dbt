@@ -1,0 +1,267 @@
+# config/default_vars.yml
+# Default variable values for different scenarios and region sizes
+
+# Default processing settings
+defaults:
+  # === SMALL REGIONS (Cities, small areas) ===
+  # Recommended for: Berlin, Paris, London, Amsterdam, etc.
+  # File size: < 500MB
+  small_region:
+    max_relation_depth: 8
+    enable_complex_multipolygons: true
+    memory_limit: "8GB"
+    threads: 2
+    dbt_target: "small"
+    processing_time_estimate: "5-10 minutes"
+    features:
+      - "Basic city infrastructure"
+      - "Simple administrative boundaries"
+      - "Urban features and amenities"
+    
+  # === MEDIUM REGIONS (States, provinces, large metropolitan areas) ===
+  # Recommended for: Bavaria, Noord-Holland, Madrid region, etc.
+  # File size: 500MB - 2GB
+  medium_region:
+    max_relation_depth: 10
+    enable_complex_multipolygons: true
+    memory_limit: "16GB"
+    threads: 4
+    dbt_target: "dev"
+    processing_time_estimate: "15-30 minutes"
+    features:
+      - "Regional infrastructure"
+      - "State/province boundaries"
+      - "Complex urban and rural features"
+      - "Transportation networks"
+    
+  # === LARGE REGIONS (Countries, large states) ===
+  # Recommended for: Germany, France, Italy, California, etc.
+  # File size: 2GB - 10GB
+  large_region:
+    max_relation_depth: 12
+    enable_complex_multipolygons: true
+    memory_limit: "32GB"
+    threads: 8
+    dbt_target: "prod"
+    processing_time_estimate: "30-90 minutes"
+    features:
+      - "National infrastructure"
+      - "Complex administrative hierarchies"
+      - "Detailed transportation networks"
+      - "Natural features and protected areas"
+    
+  # === VERY LARGE REGIONS (Continents, very large countries) ===
+  # Recommended for: Europe, North America, Asia, etc.
+  # File size: > 10GB
+  very_large_region:
+    max_relation_depth: 15
+    enable_complex_multipolygons: false  # Disable for performance
+    memory_limit: "64GB"
+    threads: 16
+    dbt_target: "prod"
+    processing_time_estimate: "2-6 hours"
+    features:
+      - "Continental-scale features"
+      - "International boundaries"
+      - "Major transportation corridors"
+      - "Large natural features"
+    warnings:
+      - "Requires significant computational resources"
+      - "Complex multipolygons disabled for performance"
+      - "Consider processing by country instead"
+
+# Performance tuning by data characteristics
+performance_profiles:
+  # For regions with many complex relations (like Germany with detailed admin boundaries)
+  relation_heavy:
+    max_relation_depth: 15
+    enable_complex_multipolygons: true
+    memory_limit: "32GB"
+    threads: 8
+    notes: "Optimized for regions with complex administrative structures"
+    
+  # For regions with simple geography (like islands or sparse areas)
+  geometry_light:
+    max_relation_depth: 8
+    enable_complex_multipolygons: true
+    memory_limit: "8GB"
+    threads: 4
+    notes: "Optimized for regions with simple geometric structures"
+    
+  # For urban-heavy regions with many amenities and POIs
+  poi_heavy:
+    max_relation_depth: 10
+    enable_complex_multipolygons: true
+    memory_limit: "16GB"
+    threads: 6
+    notes: "Optimized for dense urban areas with many amenities"
+    
+  # For rural/natural regions with large areas but sparse data
+  rural_optimized:
+    max_relation_depth: 12
+    enable_complex_multipolygons: true
+    memory_limit: "16GB"
+    threads: 4
+    notes: "Optimized for large rural areas with natural features"
+
+# Memory scaling recommendations
+memory_scaling:
+  minimum:
+    small_region: "8GB"
+    medium_region: "16GB"
+    large_region: "32GB"
+    very_large_region: "64GB"
+
+  recommended:
+    small_region: "16GB"
+    medium_region: "24GB"
+    large_region: "32GB"
+    very_large_region: "64GB"
+    
+  optimal:
+    small_region: "16GB"
+    medium_region: "24GB"
+    large_region: "32GB"
+    very_large_region: "128GB"
+
+# Thread scaling recommendations
+thread_scaling:
+  minimum:
+    small_region: 1
+    medium_region: 2
+    large_region: 4
+    very_large_region: 8
+    
+  recommended:
+    small_region: 2
+    medium_region: 4
+    large_region: 8
+    very_large_region: 16
+    
+  optimal:
+    small_region: 4
+    medium_region: 6
+    large_region: 12
+    very_large_region: 24
+
+# Feature processing options
+feature_processing:
+  # Essential features (always enabled)
+  essential:
+    - "osm_points"
+    - "osm_lines"
+    - "osm_polygons"
+    - "osm_relations"
+    
+  # Standard features (enabled by default)
+  standard:
+    - "osm_buildings"
+    - "osm_roads"
+    - "osm_amenities"
+    - "osm_landuse"
+    
+  # Advanced features (enabled for medium+ regions)
+  advanced:
+    - "osm_administrative_boundaries"
+    - "osm_water_bodies"
+    - "complex_multipolygons"
+    
+  # Analysis features (enabled for large+ regions)
+  analysis:
+    - "osm_statistics"
+    - "osm_data_quality"
+    - "osm_relation_complexity"
+
+# Quality vs Performance trade-offs
+quality_profiles:
+  # Maximum quality - all features enabled
+  maximum_quality:
+    max_relation_depth: 20
+    enable_complex_multipolygons: true
+    enable_all_features: true
+    geometry_validation: "strict"
+    notes: "Best data quality, slowest processing"
+    
+  # Balanced quality and performance
+  balanced:
+    max_relation_depth: 12
+    enable_complex_multipolygons: true
+    enable_standard_features: true
+    geometry_validation: "normal"
+    notes: "Good balance of quality and speed"
+    
+  # Performance focused - minimal quality checks
+  performance:
+    max_relation_depth: 8
+    enable_complex_multipolygons: false
+    enable_essential_features: true
+    geometry_validation: "basic"
+    notes: "Fastest processing, basic quality"
+
+# Environment-specific configurations
+environments:
+  development:
+    memory_multiplier: 0.5  # Use less memory for development
+    thread_multiplier: 0.5  # Use fewer threads
+    enable_profiling: true
+    enable_debug_logging: true
+    
+  staging:
+    memory_multiplier: 0.75
+    thread_multiplier: 0.75
+    enable_profiling: false
+    enable_debug_logging: false
+    
+  production:
+    memory_multiplier: 1.0
+    thread_multiplier: 1.0
+    enable_profiling: false
+    enable_debug_logging: false
+    enable_monitoring: true
+
+# Resource requirements by region type
+resource_requirements:
+  city:
+    disk_space: "5-20GB"
+    processing_time: "5-30 minutes"
+    network_download: "50-500MB"
+    
+  state_province:
+    disk_space: "20-100GB"
+    processing_time: "30-120 minutes"
+    network_download: "500MB-5GB"
+    
+  country:
+    disk_space: "100-500GB"
+    processing_time: "1-6 hours"
+    network_download: "2-20GB"
+    
+  continent:
+    disk_space: "500GB-2TB"
+    processing_time: "4-24 hours"
+    network_download: "20-100GB"
+
+# Optimization recommendations
+optimization_tips:
+  small_datasets:
+    - "Use TARGET=small for faster iteration"
+    - "Enable all features for complete analysis"
+    - "Consider processing multiple small regions in parallel"
+    
+  large_datasets:
+    - "Use SSD storage for better I/O performance"
+    - "Increase memory limit to avoid swapping"
+    - "Process during off-peak hours"
+    - "Consider chunking very large regions"
+    
+  memory_constrained:
+    - "Disable complex multipolygons"
+    - "Reduce max_relation_depth"
+    - "Process features incrementally"
+    - "Use streaming where possible"
+    
+  time_constrained:
+    - "Use performance quality profile"
+    - "Increase thread count"
+    - "Skip analysis models initially"
+    - "Use incremental processing"

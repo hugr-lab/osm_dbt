@@ -1,0 +1,54 @@
+name: 'osm_universal'
+version: '1.0.0'
+config-version: 2
+
+profile: 'osm_universal'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+docs-paths: ["docs"]
+
+vars:
+  # Main variables for OSM data
+  osm_pbf_path: "{{ env_var('OSM_PBF_PATH', './data/raw/region-latest.osm.pbf') }}"
+  osm_region_name: "{{ env_var('OSM_REGION_NAME', 'region') }}"
+  osm_download_url: "{{ env_var('OSM_DOWNLOAD_URL', '') }}"
+  
+  # Processing settings
+  max_relation_depth: "{{ env_var('MAX_RELATION_DEPTH', '10') | int }}"
+  enable_complex_multipolygons: "{{ env_var('ENABLE_COMPLEX_MULTIPOLYGONS', 'true') }}"
+  
+  # Paths for hugr schemas
+  hugr_schema_path: "./models/hugr_schema"
+
+models:
+  osm_universal:
+    staging:
+      +materialized: table
+      +post-hook: |
+        {% if 'geom' in adapter.get_columns_in_relation(this) %}
+        CREATE INDEX IF NOT EXISTS idx_{{ this.name }}_geom ON {{ this }} USING RTREE (geom);
+        {% endif %}
+    intermediate:
+      +materialized: table
+    marts:
+      core:
+        +materialized: table
+        +post-hook: |
+          {% if 'geom' in adapter.get_columns_in_relation(this) %}
+          CREATE INDEX IF NOT EXISTS idx_{{ this.name }}_geom ON {{ this }} USING RTREE (geom);
+          {% endif %}
+      features:
+        +materialized: table
+        +post-hook: |
+          {% if 'geom' in adapter.get_columns_in_relation(this) %}
+          CREATE INDEX IF NOT EXISTS idx_{{ this.name }}_geom ON {{ this }} USING RTREE (geom);
+          {% endif %}
+      analysis:
+        +materialized: table
+
+clean-targets:
+  - "target"
+  - "dbt_packages"

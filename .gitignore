@@ -1,0 +1,40 @@
+# dbt
+target/
+dbt_packages/
+logs/
+tmp/
+
+# Data files
+data/*.osm.pbf
+data/raw/*.osm.pbf
+data/processed/*.duckdb
+data/processed/*.duckdb.wal
+
+# Environment
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Profiles (may contain sensitive info)
+profiles.yml.backup

@@ -1,0 +1,322 @@
+# config/regions.yml
+# Predefined configurations for popular OSM regions
+
+regions:
+  # === GERMANY AND SURROUNDING ===
+  germany:
+    name: "germany"
+    url: "https://download.geofabrik.de/europe/germany-latest.osm.pbf"
+    description: "Germany complete dataset"
+    memory_limit: "32GB"
+    threads: 4
+    
+  berlin:
+    name: "berlin"
+    url: "https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf"
+    description: "Berlin city dataset"
+    memory_limit: "8GB"
+    threads: 2
+    
+  bayern:
+    name: "bayern"
+    url: "https://download.geofabrik.de/europe/germany/bayern-latest.osm.pbf"
+    description: "Bundes Land Bayern dataset"
+    memory_limit: "16GB"
+    threads: 4
+
+  bw:
+    name: "bw"
+    url: "https://download.geofabrik.de/europe/germany/baden-wuerttemberg-latest.osm.pbf"
+    description: "Bundes Land Baden-Württemberg Dataset"
+    memory_limit: "16GB"
+    threads: 4
+    
+  hamburg:
+    name: "hamburg"
+    url: "https://download.geofabrik.de/europe/germany/hamburg-latest.osm.pbf"
+    description: "Hamburg city dataset"
+    memory_limit: "16GB"
+    threads: 2
+    
+  north_rhine_westphalia:
+    name: "north-rhine-westphalia"
+    url: "https://download.geofabrik.de/europe/germany/nordrhein-westfalen-latest.osm.pbf"
+    description: "North Rhine-Westphalia state dataset"
+    memory_limit: "16GB"
+    threads: 4
+    
+  # === MAJOR EUROPEAN COUNTRIES ===
+  france:
+    name: "france"
+    url: "https://download.geofabrik.de/europe/france-latest.osm.pbf"
+    description: "France complete dataset"
+    memory_limit: "32GB"
+    threads: 4
+    
+  italy:
+    name: "italy"
+    url: "https://download.geofabrik.de/europe/italy-latest.osm.pbf"
+    description: "Italy complete dataset"
+    memory_limit: "16GB"
+    threads: 4
+
+  spain:
+    name: "spain"
+    url: "https://download.geofabrik.de/europe/spain-latest.osm.pbf"
+    description: "Spain complete dataset"
+    memory_limit: "16GB"
+    threads: 4
+
+  uk:
+    name: "great-britain"
+    url: "https://download.geofabrik.de/europe/great-britain-latest.osm.pbf"
+    description: "Great Britain complete dataset"
+    memory_limit: "16GB"
+    threads: 4
+    
+  poland:
+    name: "poland"
+    url: "https://download.geofabrik.de/europe/poland-latest.osm.pbf"
+    description: "Poland complete dataset"
+    memory_limit: "16GB"
+    threads: 4
+
+  netherlands:
+    name: "netherlands"
+    url: "https://download.geofabrik.de/europe/netherlands-latest.osm.pbf"
+    description: "Netherlands complete dataset"
+    memory_limit: "8GB"
+    threads: 2
+    
+  belgium:
+    name: "belgium"
+    url: "https://download.geofabrik.de/europe/belgium-latest.osm.pbf"
+    description: "Belgium complete dataset"
+    memory_limit: "4GB"
+    threads: 2
+
+  switzerland:
+    name: "switzerland"
+    url: "https://download.geofabrik.de/europe/switzerland-latest.osm.pbf"
+    description: "Switzerland complete dataset"
+    memory_limit: "4GB"
+    threads: 2
+    
+  austria:
+    name: "austria"
+    url: "https://download.geofabrik.de/europe/austria-latest.osm.pbf"
+    description: "Austria complete dataset"
+    memory_limit: "4GB"
+    threads: 2
+
+  # === EUROPEAN CITIES ===
+  paris:
+    name: "paris"
+    url: "https://download.geofabrik.de/europe/france/ile-de-france-latest.osm.pbf"
+    description: "Paris metropolitan area"
+    memory_limit: "8GB"
+    threads: 2
+    
+  london:
+    name: "london"
+    url: "https://download.geofabrik.de/europe/great-britain/england/greater-london-latest.osm.pbf"
+    description: "Greater London dataset"
+    memory_limit: "8GB"
+    threads: 2
+
+  madrid:
+    name: "madrid"
+    url: "https://download.geofabrik.de/europe/spain/madrid-latest.osm.pbf"
+    description: "Madrid region dataset"
+    memory_limit: "4GB"
+    threads: 2
+
+  rome:
+    name: "rome"
+    url: "https://download.geofabrik.de/europe/italy/lazio-latest.osm.pbf"
+    description: "Rome region (Lazio) dataset"
+    memory_limit: "4GB"
+    threads: 2
+    
+  amsterdam:
+    name: "amsterdam"
+    url: "https://download.geofabrik.de/europe/netherlands/noord-holland-latest.osm.pbf"
+    description: "Amsterdam region (Noord-Holland) dataset"
+    memory_limit: "4GB"
+    threads: 2
+
+  # === NORTH AMERICA ===
+  california:
+    name: "california"
+    url: "https://download.geofabrik.de/north-america/us/california-latest.osm.pbf"
+    description: "California state dataset"
+    memory_limit: "16GB"
+    threads: 4
+    
+  new_york:
+    name: "new-york"
+    url: "https://download.geofabrik.de/north-america/us/new-york-latest.osm.pbf"
+    description: "New York state dataset"
+    memory_limit: "32GB"
+    threads: 4
+    
+  texas:
+    name: "texas"
+    url: "https://download.geofabrik.de/north-america/us/texas-latest.osm.pbf"
+    description: "Texas state dataset"
+    memory_limit: "16GB"
+    threads: 4
+
+  florida:
+    name: "florida"
+    url: "https://download.geofabrik.de/north-america/us/florida-latest.osm.pbf"
+    description: "Florida state dataset"
+    memory_limit: "4GB"
+    threads: 3
+    
+  canada:
+    name: "canada"
+    url: "https://download.geofabrik.de/north-america/canada-latest.osm.pbf"
+    description: "Canada complete dataset"
+    memory_limit: "32GB"
+    threads: 6
+    
+  quebec:
+    name: "quebec"
+    url: "https://download.geofabrik.de/north-america/canada/quebec-latest.osm.pbf"
+    description: "Quebec province dataset"
+    memory_limit: "8GB"
+    threads: 4
+    
+  # === ASIA ===
+  japan:
+    name: "japan"
+    url: "https://download.geofabrik.de/asia/japan-latest.osm.pbf"
+    description: "Japan complete dataset"
+    memory_limit: "16GB"
+    threads: 4
+    
+  south_korea:
+    name: "south-korea"
+    url: "https://download.geofabrik.de/asia/south-korea-latest.osm.pbf"
+    description: "South Korea complete dataset"
+    memory_limit: "8GB"
+    threads: 2
+    
+  thailand:
+    name: "thailand"
+    url: "https://download.geofabrik.de/asia/thailand-latest.osm.pbf"
+    description: "Thailand complete dataset"
+    memory_limit: "8GB"
+    threads: 2
+    
+  malaysia:
+    name: "malaysia"
+    url: "https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf"
+    description: "Malaysia, Singapore and Brunei dataset"
+    memory_limit: "4GB"
+    threads: 2
+
+  # === OCEANIA ===
+  australia:
+    name: "australia"
+    url: "https://download.geofabrik.de/australia-oceania/australia-latest.osm.pbf"
+    description: "Australia complete dataset"
+    memory_limit: "16GB"
+    threads: 4
+    
+  new_zealand:
+    name: "new-zealand"
+    url: "https://download.geofabrik.de/australia-oceania/new-zealand-latest.osm.pbf"
+    description: "New Zealand complete dataset"
+    memory_limit: "4GB"
+    threads: 2
+    
+  # === AFRICA ===
+  south_africa:
+    name: "south-africa"
+    url: "https://download.geofabrik.de/africa/south-africa-latest.osm.pbf"
+    description: "South Africa complete dataset"
+    memory_limit: "8GB"
+    threads: 2
+    
+  # === LARGE REGIONS ===
+  europe:
+    name: "europe"
+    url: "https://download.geofabrik.de/europe-latest.osm.pbf"
+    description: "Europe complete dataset"
+    memory_limit: "64GB"
+    threads: 8
+    
+  north_america:
+    name: "north-america"
+    url: "https://download.geofabrik.de/north-america-latest.osm.pbf"
+    description: "North America complete dataset"
+    memory_limit: "64GB"
+    threads: 8
+    
+  asia:
+    name: "asia"
+    url: "https://download.geofabrik.de/asia-latest.osm.pbf"
+    description: "Asia complete dataset"
+    memory_limit: "64GB"
+    threads: 12
+    
+  # === SPECIAL DATASETS ===
+  alps:
+    name: "alps"
+    url: "https://download.geofabrik.de/europe/alps-latest.osm.pbf"
+    description: "Alpine region dataset"
+    memory_limit: "2GB"
+    threads: 2
+    
+  # === EASTERN EUROPE ===
+  czech_republic:
+    name: "czech-republic"
+    url: "https://download.geofabrik.de/europe/czech-republic-latest.osm.pbf"
+    description: "Czech Republic complete dataset"
+    memory_limit: "8GB"
+    threads: 2
+    
+  hungary:
+    name: "hungary"
+    url: "https://download.geofabrik.de/europe/hungary-latest.osm.pbf"
+    description: "Hungary complete dataset"
+    memory_limit: "4GB"
+    threads: 2
+
+  slovakia:
+    name: "slovakia"
+    url: "https://download.geofabrik.de/europe/slovakia-latest.osm.pbf"
+    description: "Slovakia complete dataset"
+    memory_limit: "4GB"
+    threads: 2
+    
+  # === NORDIC COUNTRIES ===
+  sweden:
+    name: "sweden"
+    url: "https://download.geofabrik.de/europe/sweden-latest.osm.pbf"
+    description: "Sweden complete dataset"
+    memory_limit: "16GB"
+    threads: 3
+    
+  norway:
+    name: "norway"
+    url: "https://download.geofabrik.de/europe/norway-latest.osm.pbf"
+    description: "Norway complete dataset"
+    memory_limit: "16GB"
+    threads: 3
+
+  denmark:
+    name: "denmark"
+    url: "https://download.geofabrik.de/europe/denmark-latest.osm.pbf"
+    description: "Denmark complete dataset"
+    memory_limit: "8GB"
+    threads: 2
+    
+  finland:
+    name: "finland"
+    url: "https://download.geofabrik.de/europe/finland-latest.osm.pbf"
+    description: "Finland complete dataset"
+    memory_limit: "16GB"
+    threads: 2
