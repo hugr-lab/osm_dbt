@@ -33,7 +33,7 @@ SELECT
         WHEN json_exists(tags, 'healthcare') THEN 'healthcare'
         ELSE 'other'
     END as category,
-    tags
+    tags::JSON AS tags
 FROM {{ ref('stg_osm_nodes') }}
 WHERE json_exists(tags, 'amenity') 
    OR json_exists(tags, 'shop') 
@@ -75,7 +75,7 @@ SELECT
         WHEN json_exists(tags, 'healthcare') THEN 'healthcare'
         ELSE 'other'
     END as category,
-    tags
+    tags::JSON AS tags
 FROM {{ ref('int_way_geometries') }}
 WHERE geometry_type = 'polygon'
   AND (
@@ -120,7 +120,7 @@ SELECT
         WHEN json_exists(tags, 'healthcare') THEN 'healthcare'
         ELSE 'other'
     END as category,
-    tags
+    tags::JSON AS tags
 FROM {{ ref('int_complex_multipolygons') }}
 WHERE (
     json_exists(tags, 'amenity') OR 

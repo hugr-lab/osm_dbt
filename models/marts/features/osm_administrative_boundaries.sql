@@ -21,7 +21,7 @@ WITH admin_boundaries AS (
     WHERE tags->>'boundary' IN ('administrative', 'political')
       AND json_exists(tags, 'admin_level')
       AND TRY_CAST(tags->>'admin_level' AS INTEGER) BETWEEN 2 AND 11
-      AND final_geom IS NOT NULL
+      AND final_geom IS NOT NULL AND NOT ST_IsEmpty(final_geom)
 ),
 admin_hierarchy AS (
     -- Determine hierarchy of administrative units through spatial intersection
@@ -77,6 +77,6 @@ SELECT
     reference_code,
     parent_units,
     child_count,
-    tags
+    tags::JSON AS tags
 FROM admin_hierarchy
 ORDER BY admin_level, area_sqm DESC

@@ -21,7 +21,7 @@ SELECT
     tags->>'addr:housenumber' as house_number,
     tags->>'addr:city' as city,
     tags->>'addr:postcode' as postcode,
-    tags,
+    tags::JSON AS tags,
     processed_at
 FROM {{ ref('stg_osm_nodes') }}
 WHERE tags IS NOT NULL

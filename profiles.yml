@@ -12,8 +12,9 @@ osm_universal:
       settings:
         memory_limit: "{{ env_var('DUCKDB_MEMORY_LIMIT', '64GB') }}"
         threads: "{{ env_var('DUCKDB_THREADS', '4') | int }}"
-        max_temp_directory_size: "150GB" 
-    
+        max_temp_directory_size: "150GB"
+        disabled_optimizers: 'join_order,build_side_probe_side'
+
     prod:
       type: duckdb
       path: './data/processed/{{ env_var("OSM_REGION_NAME", "region") }}_prod.duckdb'

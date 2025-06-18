@@ -20,9 +20,9 @@ SELECT
     tags->>'bridge' as bridge,
     tags->>'tunnel' as tunnel,
     ST_Length(geom) as length_m,
-    tags,
+    tags::JSON AS tags,
     processed_at
 FROM {{ ref('int_way_geometries') }}
-WHERE geometry_type = 'linestring'
+WHERE geometry_type = 'linestring' AND NOT ST_IsEmpty(geom)
   AND tags IS NOT NULL
   AND tags != '{}'::JSON

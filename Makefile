@@ -87,6 +87,14 @@ process-region:
 	@echo "🔄 Processing OSM data for $(REGION)..."
 	@sh ./scripts/process_region.sh --target $(TARGET) $(REGION)
 
+optimize-db:
+	@if [ -z "$(REGION)" ]; then \
+		echo "❌ REGION is required. Use: make optimize-db REGION=germany"; \
+		exit 1; \
+	fi
+	@echo "⚙️  Optimizing database for $(REGION)..."
+	@sh ./scripts/optimize_db.sh --target $(TARGET) $(REGION)
+
 quick-region:
 	@if [ -z "$(REGION)" ]; then \
 		echo "❌ REGION is required. Use: make quick-region REGION=germany"; \
@@ -94,6 +102,7 @@ quick-region:
 	fi
 	@echo "🚀 Quick processing $(REGION) (download + process)..."
 	@sh ./scripts/process_region.sh --download --target $(TARGET) $(REGION)
+	@sh ./scripts/optimize_db.sh --target $(TARGET) $(REGION)
 
 # dbt operations
 build:

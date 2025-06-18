@@ -48,7 +48,7 @@ SELECT
         WHEN (tags->>'type' = 'associatedStreet') THEN 'associated_street'
         ELSE 'other'
     END as category,
-    tags,
+    tags::JSON AS tags,
     processed_at
 FROM relation_stats
 WHERE tags IS NOT NULL

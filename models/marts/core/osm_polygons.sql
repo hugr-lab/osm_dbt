@@ -16,13 +16,13 @@ SELECT
     tags->>'place' as place_type,
     tags->>'water' as water_type,
     tags->>'wetland' as wetland_type,
-    ST_Area(geom) as area_sqm,
-    ST_Perimeter(geom) as perimeter_m,
+    ST_Area_Spheroid(geom) as area_sqm,
+    ST_Perimeter_Spheroid(geom) as perimeter_m,
     'simple' as complexity,
-    tags,
+    tags::JSON AS tags,
     processed_at
 FROM {{ ref('int_way_geometries') }}
-WHERE geometry_type = 'polygon'
+WHERE geometry_type = 'polygon' AND NOT ST_IsEmpty(geom)
   AND tags IS NOT NULL
   AND tags != '{}'::JSON
 
@@ -46,9 +46,9 @@ SELECT
     area_sqm,
     perimeter_m,
     complexity_type as complexity,
-    tags,
+    tags::JSON AS tags,
     CURRENT_TIMESTAMP as processed_at
 FROM {{ ref('int_complex_multipolygons') }}
-WHERE final_geom IS NOT NULL
+WHERE final_geom IS NOT NULL AND NOT ST_IsEmpty(final_geom)
   AND tags IS NOT NULL
   AND tags != '{}'::JSON

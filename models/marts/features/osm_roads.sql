@@ -28,8 +28,8 @@ SELECT
     {{ safe_numeric_tag('maxspeed') }} as max_speed_kmh,
     -- Lane count as integer
     TRY_CAST(tags->>'lanes' AS INTEGER) as lane_count,
-    tags
+    tags::JSON AS tags
 FROM {{ ref('int_way_geometries') }}
-WHERE geometry_type = 'linestring'
+WHERE geometry_type = 'linestring' AND NOT ST_IsEmpty(geom)
   AND json_exists(tags, 'highway')
   AND (tags->>'highway') NOT IN ('bus_stop', 'crossing', 'give_way', 'stop', 'traffic_signals')

@@ -1,6 +1,13 @@
 -- models/staging/stg_osm_nodes.sql
 {{ config(materialized='table') }}
 
+{{ config(
+    materialized='table',
+    post_hook=[
+        "CREATE INDEX IF NOT EXISTS idx_{{ this.name }}_node_id ON {{ this }} USING ART (node_id)"
+    ]
+) }}
+
 SELECT 
     id as node_id,
     lat as latitude,

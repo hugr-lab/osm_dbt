@@ -20,8 +20,8 @@ SELECT
     tags->>'operator' as operator,
     tags->>'access' as access,
     tags->>'surface' as surface,
-    ST_Area(geom) as area_sqm,
-    ST_Perimeter(geom) as perimeter_m,
+    ST_Area_Spheroid(geom) as area_sqm,
+    ST_Perimeter_Spheroid(geom) as perimeter_m,
     'simple' as complexity,
     -- Landuse classification
     CASE 
@@ -31,9 +31,9 @@ SELECT
         WHEN json_exists(tags, 'place') THEN 'place'
         ELSE 'other'
     END as landuse_class,
-    tags
+    tags::JSON AS tags
 FROM {{ ref('int_way_geometries') }}
-WHERE geometry_type = 'polygon'
+WHERE geometry_type = 'polygon' AND NOT ST_IsEmpty(geom)
   AND (
       json_exists(tags, 'landuse') OR 
       json_exists(tags, 'natural') OR 
@@ -72,7 +72,7 @@ SELECT
         WHEN json_exists(tags, 'place') THEN 'place'
         ELSE 'other'
     END as landuse_class,
-    tags
+    tags::JSON AS tags
 FROM {{ ref('int_complex_multipolygons') }}
 WHERE (
     json_exists(tags, 'landuse') OR 
@@ -80,4 +80,4 @@ WHERE (
     json_exists(tags, 'leisure') OR
     json_exists(tags, 'place')
   )
-  AND final_geom IS NOT NULL
+  AND final_geom IS NOT NULL AND NOT ST_IsEmpty(final_geom)

@@ -1,5 +1,10 @@
 -- models/staging/stg_osm_ways.sql
-{{ config(materialized='table') }}
+{{ config(
+    materialized='table',
+    post_hook=[
+        "CREATE INDEX IF NOT EXISTS idx_{{ this.name }}_way_id ON {{ this }} USING ART (way_id)"
+    ]
+) }}
 
 SELECT 
     id as way_id,

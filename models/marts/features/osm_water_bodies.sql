@@ -13,8 +13,8 @@ SELECT
     tags->>'intermittent' as intermittent,
     tags->>'seasonal' as seasonal,
     tags->>'salt' as salt_water,
-    ST_Area(geom) as area_sqm,
-    ST_Perimeter(geom) as perimeter_m,
+    ST_Area_Spheroid(geom) as area_sqm,
+    ST_Perimeter_Spheroid(geom) as perimeter_m,
     'simple' as complexity,
     CASE 
         WHEN tags->>'natural' = 'water' THEN 'water'
@@ -24,7 +24,7 @@ SELECT
     END as water_class,
     tags
 FROM {{ ref('int_way_geometries') }}
-WHERE geometry_type = 'polygon'
+WHERE geometry_type = 'polygon' AND NOT ST_IsEmpty(geom)
   AND (
       tags->>'natural' IN ('water', 'wetland') OR
       json_exists(tags, 'waterway')
@@ -59,4 +59,4 @@ WHERE (
       (tags->>'natural') IN ('water', 'wetland') OR
       json_exists(tags, 'waterway')
   )
-  AND final_geom IS NOT NULL
+  AND final_geom IS NOT NULL AND NOT ST_IsEmpty(final_geom)

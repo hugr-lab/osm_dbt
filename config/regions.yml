@@ -7,7 +7,7 @@ regions:
     name: "germany"
     url: "https://download.geofabrik.de/europe/germany-latest.osm.pbf"
     description: "Germany complete dataset"
-    memory_limit: "32GB"
+    memory_limit: "96GB"
     threads: 4
     
   berlin:
