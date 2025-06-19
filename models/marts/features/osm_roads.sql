@@ -21,7 +21,7 @@ SELECT
     tags->>'sidewalk' as sidewalk,
     tags->>'lit' as lit,
     tags->>'width' as width,
-    ST_Length(geom) as length_m,
+    ST_Length_Spheroid(geom) as length_m,
     -- Road classification
     {{ classify_highway("tags->>'highway'") }} as road_class,
     -- Speed limit as integer

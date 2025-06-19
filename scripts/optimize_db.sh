@@ -94,7 +94,6 @@ echo ""
 
 # Get original size
 ORIGINAL_SIZE=$(du -h "$DB_PATH" | cut -f1)
-ORIGINAL_SIZE_BYTES=$(du -b "$DB_PATH" | cut -f1)
 
 echo "📊 Original database size: $ORIGINAL_SIZE"
 
@@ -173,18 +172,13 @@ if [ $? -eq 0 ] && [ -f "$DB_PATH_OPTIMIZED" ]; then
     
     # Get new size
     NEW_SIZE=$(du -h "$DB_PATH" | cut -f1)
-    NEW_SIZE_BYTES=$(du -b "$DB_PATH" | cut -f1)
     
-    # Calculate savings
-    SAVED_BYTES=$((ORIGINAL_SIZE_BYTES - NEW_SIZE_BYTES))
-    SAVINGS_PERCENT=$(( (SAVED_BYTES * 100) / ORIGINAL_SIZE_BYTES ))
     
     echo ""
     echo "✅ Optimization completed successfully!"
     echo "📊 Results:"
     echo "   Original size:  $ORIGINAL_SIZE"
     echo "   Optimized size: $NEW_SIZE"
-    echo "   Space saved:    $(echo $SAVED_BYTES | numfmt --to=iec) (${SAVINGS_PERCENT}%)"
     
     # Remove temporary file
     rm -f "$DB_PATH_TEMP"

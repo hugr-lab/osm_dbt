@@ -2,6 +2,8 @@
 
 Universal dbt project for processing OpenStreetMap data from any region with support for recursive relations, multipolygons, and all OSM object types.
 
+**Important**: This project is experimental and may change significantly. It is designed to be flexible and extensible for various OSM regions.
+
 ## 🌟 Features
 
 - ✅ **Universal Region Support** - Process any OSM region via URL or predefined configs
@@ -46,7 +48,7 @@ OSM PBF File → ST_ReadOSM → Staging → Intermediate → Core & Features →
 ### Prerequisites
 
 - Python 3.8+
-- 4GB+ RAM (varies by region size)
+- 8GB+ RAM (varies by region size)
 - Internet connection for downloads
 
 ### Setup
@@ -105,6 +107,9 @@ make download-region REGION=spain
 # Process with specific target
 make process-region REGION=spain TARGET=prod
 
+# Optimize db size
+make optimize-db REGION=spain TARGET=prod
+
 # Run tests
 make test TARGET=prod
 ```
@@ -162,14 +167,14 @@ regions:
   germany:
     name: "germany"
     url: "https://download.geofabrik.de/europe/germany-latest.osm.pbf"
-    memory_limit: "8GB"
+    memory_limit: "64GB"
     threads: 4
   
   berlin:
     name: "berlin" 
     url: "https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf"
-    memory_limit: "2GB"
-    threads: 2
+    memory_limit: "16GB"
+    threads: 4
 ```
 
 ## 🔗 hugr Integration
@@ -179,19 +184,23 @@ regions:
 ```bash
 # Generate data source configuration
 make hugr-integration REGION=germany
+```
 
+```graphql
 # This creates a GraphQL mutation like:
 mutation addOSMGermanyDataSource {
   core {
-    insert_data_sources(data: {
-      name: "osm.germany"
-      type: "duckdb"
-      prefix: "osm_germany"
-      path: "./data/processed/germany.duckdb"
-      description: "OpenStreetMap data for germany processed with dbt"
-      as_module: true
-      read_only: false
-    }) {
+    insert_data_sources(
+      data: {
+        name: "osm.germany"
+        type: "duckdb"
+        prefix: "osm_germany"
+        path: "./data/processed/germany.duckdb"
+        description: "OpenStreetMap data for germany processed with dbt"
+        as_module: true
+        read_only: false
+      }
+    ) {
       name type path
     }
   }
@@ -526,7 +535,7 @@ WHERE ST_DWithin(b.geom, h.geom, 1000)
 -- Road density by administrative area
 SELECT 
     a.name,
-    SUM(ST_Length(r.geom)) / ST_Area(a.geom) * 1000000 as road_density_per_km2
+    SUM(ST_Length_Spheroid(r.geom)) / ST_Area_Spheroid(a.geom) * 1000000 as road_density_per_km2
 FROM osm_administrative_boundaries a
 JOIN osm_roads r ON ST_Intersects(a.geom, r.geom)
 GROUP BY a.name, a.geom
@@ -577,8 +586,8 @@ MIT License - see LICENSE file for details.
 - [DuckDB](https://duckdb.org/) for the powerful spatial engine
 - [dbt](https://www.getdbt.com/) for the data transformation framework
 - [Geofabrik](https://download.geofabrik.de/) for OSM extracts
-- [hugr](https://github.com/hugr-lab/hugr) for the GraphQL API platform
+- [hugr](https://hugr-lab.github.io/) for the GraphQL API platform
 
----
+----
 
 **Happy mapping! 🗺️**

@@ -85,29 +85,29 @@ regions:
     name: "netherlands"
     url: "https://download.geofabrik.de/europe/netherlands-latest.osm.pbf"
     description: "Netherlands complete dataset"
-    memory_limit: "8GB"
-    threads: 2
+    memory_limit: "16GB"
+    threads: 4
     
   belgium:
     name: "belgium"
     url: "https://download.geofabrik.de/europe/belgium-latest.osm.pbf"
     description: "Belgium complete dataset"
-    memory_limit: "4GB"
-    threads: 2
+    memory_limit: "8GB"
+    threads: 4
 
   switzerland:
     name: "switzerland"
     url: "https://download.geofabrik.de/europe/switzerland-latest.osm.pbf"
     description: "Switzerland complete dataset"
-    memory_limit: "4GB"
-    threads: 2
-    
+    memory_limit: "8GB"
+    threads: 4
+
   austria:
     name: "austria"
     url: "https://download.geofabrik.de/europe/austria-latest.osm.pbf"
     description: "Austria complete dataset"
-    memory_limit: "4GB"
-    threads: 2
+    memory_limit: "8GB"
+    threads: 4
 
   # === EUROPEAN CITIES ===
   paris:

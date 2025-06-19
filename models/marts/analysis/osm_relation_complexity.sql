@@ -34,7 +34,7 @@ relation_analysis AS (
     FROM {{ ref('stg_osm_relations') }} r
     LEFT JOIN relation_depth_stats rds ON r.relation_id = rds.relation_id
     LEFT JOIN {{ ref('stg_osm_relation_members') }} rm ON r.relation_id = rm.relation_id
-    LEFT JOIN {{ ref('int_complex_multipolygons') }} mp ON r.relation_id = mp.relation_id
+    LEFT JOIN {{ ref('int_complex_multipolygons') }} mp ON r.relation_id = mp.relation_id AND NOT ST_IsEmpty(mp.final_geom)
     GROUP BY r.relation_id, r.tags, rds.max_depth, rds.total_ways, rds.total_nodes, 
              rds.total_nested_relations, mp.relation_id, mp.complexity_type, mp.area_sqm
 ),

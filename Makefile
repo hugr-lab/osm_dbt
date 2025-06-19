@@ -100,7 +100,7 @@ quick-region:
 		echo "❌ REGION is required. Use: make quick-region REGION=germany"; \
 		exit 1; \
 	fi
-	@echo "🚀 Quick processing $(REGION) (download + process)..."
+	@echo "🚀 Quick processing $(REGION) (download + process + optimize)..."
 	@sh ./scripts/process_region.sh --download --target $(TARGET) $(REGION)
 	@sh ./scripts/optimize_db.sh --target $(TARGET) $(REGION)
 
