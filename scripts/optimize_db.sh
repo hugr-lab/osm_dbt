@@ -9,6 +9,11 @@ if [ -f .env ]; then
     export $(cat .env | grep -v '^#' | xargs)
 fi
 
+# Ensure DuckDB is in PATH
+if [ -d "$HOME/.duckdb/cli/latest" ]; then
+    export PATH="$HOME/.duckdb/cli/latest:$PATH"
+fi
+
 show_help() {
     echo "DuckDB Database Optimizer"
     echo "========================"
@@ -138,7 +143,11 @@ LOAD spatial;
 
 -- Show original database info
 ATTACH '$DB_PATH_TEMP' AS source_db (READ_ONLY);
-SELECT 'Original tables count: ' || COUNT(*) FROM source_db.information_schema.tables;
+SELECT 'Original tables count: ' || COUNT(*) 
+FROM duckdb_tables() 
+WHERE 
+    database_name = 'source_db' AND
+    schema_name = 'main';
 
 -- Create optimized database
 ATTACH '$DB_PATH_OPTIMIZED' AS target_db;
@@ -147,7 +156,11 @@ ATTACH '$DB_PATH_OPTIMIZED' AS target_db;
 COPY FROM DATABASE source_db TO target_db;
 
 -- Show optimized database info  
-SELECT 'Optimized tables count: ' || COUNT(*) FROM target_db.information_schema.tables;
+SELECT 'Optimized tables count: ' || COUNT(*)
+FROM duckdb_tables() 
+WHERE 
+    database_name = 'target_db' AND
+    schema_name = 'main';
 
 -- Cleanup
 DETACH source_db;

@@ -15,6 +15,28 @@ fi
 
 echo "✅ Python3 found: $(python3 --version)"
 
+# Check and install DuckDB CLI
+echo "🦆 Checking DuckDB CLI..."
+if ! command -v duckdb &> /dev/null; then
+    echo "📦 Installing DuckDB CLI..."
+    curl https://install.duckdb.org | sh
+    
+    # Add to PATH for current session and future sessions
+    export PATH="$HOME/.duckdb/cli/latest:$PATH"
+    
+    # Add to shell profile for persistence
+    if [ -f ~/.zshrc ]; then
+        echo 'export PATH="$HOME/.duckdb/cli/latest:$PATH"' >> ~/.zshrc
+    elif [ -f ~/.bashrc ]; then
+        echo 'export PATH="$HOME/.duckdb/cli/latest:$PATH"' >> ~/.bashrc
+    fi
+    
+    echo "✅ DuckDB CLI installed and added to PATH"
+    echo "   You may need to restart your shell or run: source ~/.zshrc"
+else
+    echo "✅ DuckDB CLI already available"
+fi
+
 # Check that we're in the correct directory
 if [ ! -f "dbt_project.yml" ]; then
     echo "❌ dbt_project.yml not found. Are you in the project root directory?"

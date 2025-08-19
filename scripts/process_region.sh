@@ -14,6 +14,15 @@ else
     echo "⚠️  No .env file found"
 fi
 
+# Activate virtual environment if it exists
+if [ -f "venv/bin/activate" ]; then
+    echo "🔄 Activating virtual environment..."
+    source venv/bin/activate
+    echo "✅ Virtual environment activated"
+else
+    echo "⚠️  Virtual environment not found. Run 'make setup' first."
+fi
+
 show_help() {
     echo "OSM Region Processor"
     echo "==================="

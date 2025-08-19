@@ -9,6 +9,15 @@ if [ -f .env ]; then
     export $(cat .env | grep -v '^#' | xargs)
 fi
 
+# Activate virtual environment if it exists
+if [ -f "venv/bin/activate" ]; then
+    echo "🔄 Activating virtual environment..."
+    source venv/bin/activate
+    echo "✅ Virtual environment activated"
+else
+    echo "⚠️  Virtual environment not found. Run 'make setup' first."
+fi
+
 # Functions for working with YAML
 parse_yaml() {
     local file="$1"

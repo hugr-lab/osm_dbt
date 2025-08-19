@@ -5,9 +5,9 @@ regions:
   # === GERMANY AND SURROUNDING ===
   germany:
     name: "germany"
-    url: "https://download.geofabrik.de/europe/germany-latest.osm.pbf"
+    url: "https://ftp5.gwdg.de/pub/misc/openstreetmap/download.geofabrik.de/germany-latest.osm.pbf"
     description: "Germany complete dataset"
-    memory_limit: "96GB"
+    memory_limit: "128GB"
     threads: 4
     
   berlin:
